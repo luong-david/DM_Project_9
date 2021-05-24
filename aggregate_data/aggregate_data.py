@@ -4,15 +4,26 @@ import mmap
 import os
 import time
 #%%
-bus_file = open('../yelp_academic_dataset_business.json', 'r')
-rev_file = open('../yelp_academic_dataset_review.json', 'r')
-feature_file_name = 'feature_file_pt1.json'
+bus_file = open('yelp_academic_dataset_business.json', 'r')
+rev_file = open('yelp_academic_dataset_review.json', 'r')
+feature_file_name = 'feature_file_pt2.json'
 feature_file = open(feature_file_name, 'w') #Create and overwrite....
 
 #%%
 start_time = time.time()
-for i in range(0,5):
-    feature_vect = json.loads(bus_file.readline())
+file_index = 1
+
+#Skip ahead - come back and test this.
+skip_ahead_index = 3000
+for i in range(0, skip_ahead_index):
+    bus_file.readline()
+
+
+for line in bus_file:
+    int_time = time.time()
+    print('On file ', file_index)
+    file_index+=1
+    feature_vect = json.loads(line)
     bus_id = feature_vect['business_id']
     review_count = 1
     indices_to_remove = []
@@ -23,11 +34,12 @@ for i in range(0,5):
     while loc != -1:
         
         #Bring seek ptr to beginning of file:
-        s.seek(loc - 35)
-        test_string = s[s.tell(): s.tell() + 35].decode("utf-8")
-        while '\n' not in test_string:
-            s.seek(-35, os.SEEK_CUR)
-            test_string = s[s.tell(): s.tell() + 35].decode("utf-8")
+
+        s.seek(loc - 1)
+        test_string = s[s.tell(): s.tell() + 5].decode("utf-8")
+        while s.tell() != 0 or '\n' not in test_string:
+            s.seek(-1, os.SEEK_CUR)
+            test_string = s[s.tell(): s.tell() + 5].decode("utf-8")
         #Bring seek to beginning of line, by reading to end of 
         #current line
         nully = s.readline()
@@ -41,6 +53,6 @@ for i in range(0,5):
     with open(feature_file_name, 'a') as outfile:
         json.dump(feature_vect, outfile)
         print('\n', sep='', end='', file=outfile)
-        
+    print('Iteration took ', time.time() - int_time, ' seconds') 
 
 print(time.time() - start_time)
