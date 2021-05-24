@@ -4,8 +4,8 @@ import mmap
 import os
 import time
 #%%
-bus_file = open('yelp_academic_dataset_business.json', 'r')
-rev_file = open('yelp_academic_dataset_review.json', 'r')
+bus_file = open('../yelp_academic_dataset_business.json', 'r')
+rev_file = open('../yelp_academic_dataset_review.json', 'r')
 feature_file_name = 'feature_file_pt1.json'
 feature_file = open(feature_file_name, 'w') #Create and overwrite....
 
