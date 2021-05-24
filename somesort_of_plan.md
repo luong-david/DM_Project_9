@@ -36,13 +36,13 @@ especially because I think we could end up down the NLP rabbit hole fairly quick
 The idea behind this step is looking deeper at what makes the restaurants successful. Or even
 unsuccessful, just the defining features.
 
-#4th- Clustering once again
+# 4th- Clustering once again
 Out of step 3 I'd think we'd have some specific features that we're looking for in 
 a restaurant. We'd only use those features in a cluster analysis. Then I would hope the 
 average rating of the clusters from this step would be more consistent. This would essentially
 be verification that those features found from step 3 do indeed impact success of a restaraunt.
 
-#5th - KNN on location
+# 5th - KNN on location
 Lastly, although this doesn't have to happen last we can take the location data provided by yelp
 for each restaraunt and find the K nearest neighbors. Then with that infromation we can look at 
 the variance of the features within the various neighborhoods. This will look at how common each
