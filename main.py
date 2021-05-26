@@ -30,6 +30,25 @@ tip_data = [json.loads(line) for line in open('yelp_academic_dataset_tip.json', 
 #user_data = [json.loads(line) for line in open('yelp_academic_dataset_user.json', 'r',encoding="utf8")]
 #review_data = [json.loads(line) for line in open('yelp_academic_dataset_review.json', 'r',encoding="utf8")]
 
+# Split into restaurants, bars and things
+restaurants = []
+bars = []
+other = []
+for raw_dict in business_data:
+	appended = False
+	if raw_dict['categories'] != None:
+		if 'restaurants' in raw_dict['categories'] or 'Restaurants' in raw_dict['categories']:
+			restaurants.append(raw_dict)
+			appended = True
+		if 'bars' in raw_dict['categories'] or 'Bars' in raw_dict['categories']:
+			bars.append(raw_dict)
+			appended = True
+		if not appended:
+			other.append(raw_dict)
+print(len(restaurants))
+print(len(bars))
+print(len(other))
+
 # Dimensionality Reduction
 
 # Data Mining Analysis
