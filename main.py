@@ -57,3 +57,4 @@ print('Total number of other businesses in dataset: ', len(other))
 # Data Mining Studies
 nR = 10000 #number of restaurants to data mine
 tsk1.function1(restaurants[0:nR],bars,other)
+#tsk1.function2(restaurants[0:nR],bars,other)

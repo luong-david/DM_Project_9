@@ -11,6 +11,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 
+import functions as func
+
 def function1(restaurants,bars,other):
     print('Doing function1 in task1')
     
@@ -53,4 +55,51 @@ def function1(restaurants,bars,other):
         
         y_pred = clf.predict(X_test)
         print('The '+ lab + ' test F1-Score is ', f1_score(y_test,y_pred, average = 'micro'))
+        print('Number of Restaurants: ', restaurant_ind)
+        print('==================================')
+
+def function2(restaurants,bars,other):
+    print('Doing function2 in task1')
+    
+    # get list of all attributes
+    labels = func.getAttributesList(restaurants)
+    
+    #go through different labels
+    for lab in labels:
+    
+        #now go through all categories of the restaurants
+    
+        all_cats = []
+        all_labels = []
+        restaurant_ind = 0
+        for restaurant in restaurants:
+            if restaurant['attributes'] is not None:
+                if func.checkKey(restaurant['attributes'],lab):
+                    #get categories
+                   	cats = restaurant['categories']
+                   	all_cats.append(cats)
+                   	all_labels.append(restaurant['attributes'][lab])
+                   	restaurant_ind+=1
+
+        # skip the attribute if not enough restaurants have it ( < 10)
+        if restaurant_ind < 10:
+            continue
+        
+        vectorizer = CountVectorizer()
+        vectorizer.fit(all_cats)
+        vectorized_matrix = vectorizer.transform(all_cats)
+        all_category_names = vectorizer.get_feature_names()
+        
+        #vectorized data is esesentially the input, the categories of the data
+        #all_ratings are the labels
+        X_train, X_test, y_train, y_test = train_test_split(vectorized_matrix, all_labels, test_size=0.2)
+            
+        clf = RandomForestClassifier(max_depth=20, random_state=0)
+        clf.fit(X_train, y_train)
+        print('==================================')
+        print(lab + " accuracy is", clf.score(X_train,y_train))
+        
+        y_pred = clf.predict(X_test)
+        print('The '+ lab + ' test F1-Score is ', f1_score(y_test,y_pred, average = 'micro'))
+        print('Number of Restaurants: ', restaurant_ind)
         print('==================================')
