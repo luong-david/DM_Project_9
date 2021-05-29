@@ -9,6 +9,9 @@ import numpy as np
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import random
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from scipy.sparse import csr_matrix
 
 def SSE(mat,d1,centroid):
     diff = mat[d1,:].toarray()-centroid
@@ -138,3 +141,11 @@ def BSKM(mat,nrows,Ktarget):
         SSES.pop(ind)
     
     return CLUSTERIND, INERTIAS
+
+def DR_PCA(mat):
+    pca = PCA(n_components=20)
+    return csr_matrix(pca.fit_transform(mat.toarray()))
+
+def DR_TSNE(mat):
+    tsne = TSNE(n_components=2, perplexity=200, early_exaggeration=20, method='exact')
+    return csr_matrix(tsne.fit_transform(mat))

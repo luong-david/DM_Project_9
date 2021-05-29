@@ -66,10 +66,20 @@ if business:
     print('Total number of restaurants in dataset: ', len(restaurants))
     print('Total number of bars in dataset: ', len(bars))
     print('Total number of other businesses in dataset: ', len(other))
+    
+if tip:
+    tips = []
+    # filter out tips that are less than 8 words long
+    for raw_dict in tip_data:
+        if len(raw_dict['text'].split()) > 8:
+            tips.append(raw_dict)
+    print('Total number of tips in dataset: ', len(tips))
 
 # Data Mining Studies
 nR = 10000 #number of restaurants to data mine
 nT = 10000 #number of tips to data mine
 #tsk1.function1(restaurants[0:nR],bars,other)
 #tsk1.function2(restaurants[0:nR],bars,other)
-tsk2.function1(tip_data[0:nT])
+DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
+for dr in DR:
+    tsk2.function1(tips[0:nT], dr)
