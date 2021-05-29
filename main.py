@@ -26,12 +26,13 @@ from sklearn import metrics
 from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler
 
+import functions as func
 import task1 as tsk1
 import task2 as tsk2
 
-business = 0
+business = 1
 checkin = 0
-tip = 1
+tip = 0
 user = 0
 review = 0
  
@@ -76,10 +77,12 @@ if tip:
     print('Total number of tips in dataset: ', len(tips))
 
 # Data Mining Studies
-nR = 10000 #number of restaurants to data mine
-nT = 10000 #number of tips to data mine
-#tsk1.function1(restaurants[0:nR],bars,other)
-#tsk1.function2(restaurants[0:nR],bars,other)
-DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
-for dr in DR:
-    tsk2.function1(tips[0:nT], dr)
+if business:
+    nR = 10000 #number of restaurants to data mine
+    tsk1.function1(restaurants[0:nR],bars,other)
+    #tsk1.function2(restaurants[0:nR],bars,other)
+if tip:
+    nT = 10000 #number of tips to data mine
+    DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
+    for dr in DR:
+       tsk2.function1(tips[0:nT], dr)

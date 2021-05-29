@@ -57,6 +57,9 @@ def function1(restaurants,bars,other):
         print('The '+ lab + ' test F1-Score is ', f1_score(y_test,y_pred, average = 'micro'))
         print('Number of Restaurants: ', restaurant_ind)
         print('==================================')
+        
+        # Visualize a Decision Tree
+        func.plotDecisionTree(clf,all_category_names,str(all_labels),'classifier_'+lab)
 
 def function2(restaurants,bars,other):
     print('Doing function2 in task1')
@@ -103,3 +106,6 @@ def function2(restaurants,bars,other):
         print('The '+ lab + ' test F1-Score is ', f1_score(y_test,y_pred, average = 'micro'))
         print('Number of Restaurants: ', restaurant_ind)
         print('==================================')
+        
+        # Visualize a Decision Tree
+        func.plotDecisionTree(clf,all_category_names,all_labels,'classifier_'+lab)

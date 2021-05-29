@@ -12,6 +12,9 @@ import random
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from scipy.sparse import csr_matrix
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def SSE(mat,d1,centroid):
     diff = mat[d1,:].toarray()-centroid
@@ -144,8 +147,43 @@ def BSKM(mat,nrows,Ktarget):
 
 def DR_PCA(mat):
     pca = PCA(n_components=20)
-    return csr_matrix(pca.fit_transform(mat.toarray()))
+    pca_result= pca.fit_transform(mat.toarray())
+    return csr_matrix(pca_result), pca_result
 
 def DR_TSNE(mat):
     tsne = TSNE(n_components=2, perplexity=200, early_exaggeration=20, method='exact')
-    return csr_matrix(tsne.fit_transform(mat))
+    tsne_result = tsne.fit_transform(mat)
+    
+    result = pd.DataFrame()
+    result['tsne-2d-one'] = tsne_result[:,0]
+    result['tsne-2d-two'] = tsne_result[:,1]
+    
+    plt.figure(figsize=(16,10))
+    sns.scatterplot(
+        x="tsne-2d-one", y="tsne-2d-two",
+        hue=None,
+        palette=sns.color_palette("hls",10),
+        data=result,
+        legend="full",
+        alpha=0.3
+    )
+    return csr_matrix(tsne_result), tsne_result
+
+def plotDecisionTree(model,feature_list,class_list,filename):
+    estimator = model.estimators_[5]
+    
+    from sklearn.tree import export_graphviz
+    # Export as dot file
+    export_graphviz(estimator, out_file='./plots/classifiers/'+filename + '.dot', 
+                    feature_names = feature_list,
+                    class_names = class_list,
+                    rounded = True, proportion = False, 
+                    precision = 2, filled = True)
+    
+    # Convert to png using system command (requires Graphviz)
+    #from subprocess import call
+    #call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png', '-Gdpi=600'])
+    
+    #import pydot (requires pydot)
+    #(graph,) = pydot.graph_from_dot_file('classifier.dot')
+    #graph.write_png('tree.png')

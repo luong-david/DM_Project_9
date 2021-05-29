@@ -35,10 +35,10 @@ def function1(tip_data, DR):
         mat = mat3 
     elif DR == 1:
         print('Using TNSNE for DR for 1000 data points due to memory issue')
-        mat = func.DR_TSNE(mat3[0:1000])
+        mat, tsne_result = func.DR_TSNE(mat3[0:1000])
     elif DR == 2:
         print('Using PCA for DR for 1000 data points due to memory issue')
-        mat = func.DR_PCA(mat3[0:1000])
+        mat, pca_result = func.DR_PCA(mat3[0:1000])
     else:
         print('Invalid DR method, proceed with no DR')
         mat = mat3   
@@ -47,6 +47,7 @@ def function1(tip_data, DR):
     CLUSTERIND, INERTIAS = func.BSKM(mat,mat.shape[0],Ktarget)
     
     # Plot Total SSE vs K
+    plt.figure()
     plt.plot(range(1,Ktarget+1),INERTIAS)
     plt.xlabel('Number of Clusters')
     plt.ylabel('Average SSE')
