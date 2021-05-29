@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
+
+Main driver file for data mining studies on Yelp Dataset
+
 Created on Thu May 22 14:2:21 2021
 
-@author: e399410
+@author: Thomas Jacob, David Luong, Taylor Maurer
 """
 
 import json
@@ -23,12 +26,14 @@ from sklearn import metrics
 from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler
 
+import task1 as tsk1
+
 # Open JSON file (MemoryError for user and review)
-business_data = [json.loads(line) for line in open('yelp_academic_dataset_business.json', 'r',encoding="utf8")]
-checkin_data = [json.loads(line) for line in open('yelp_academic_dataset_checkin.json', 'r',encoding="utf8")]
-tip_data = [json.loads(line) for line in open('yelp_academic_dataset_tip.json', 'r',encoding="utf8")]
+business_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_business.json', 'r',encoding="utf8")]
+#checkin_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_checkin.json', 'r',encoding="utf8")]
+#tip_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_tip.json', 'r',encoding="utf8")]
 #user_data = [json.loads(line) for line in open('yelp_academic_dataset_user.json', 'r',encoding="utf8")]
-#review_data = [json.loads(line) for line in open('yelp_academic_dataset_review.json', 'r',encoding="utf8")]
+#review_data = [json.loads(line) for line in open('yelp_academic_dataset_review.json', 'r',encoding="utf8")] 
 
 # Split into restaurants, bars and things
 restaurants = []
@@ -45,10 +50,10 @@ for raw_dict in business_data:
 			appended = True
 		if not appended:
 			other.append(raw_dict)
-print(len(restaurants))
-print(len(bars))
-print(len(other))
+print('Total number of restaurants in dataset: ', len(restaurants))
+print('Total number of bars in dataset: ', len(bars))
+print('Total number of other businesses in dataset: ', len(other))
 
-# Dimensionality Reduction
-
-# Data Mining Analysis
+# Data Mining Studies
+nR = 10000 #number of restaurants to data mine
+tsk1.function1(restaurants[0:nR],bars,other)
