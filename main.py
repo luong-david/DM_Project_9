@@ -27,34 +27,49 @@ from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler
 
 import task1 as tsk1
+import task2 as tsk2
 
+business = 0
+checkin = 0
+tip = 1
+user = 0
+review = 0
+ 
 # Open JSON file (MemoryError for user and review)
-business_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_business.json', 'r',encoding="utf8")]
-#checkin_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_checkin.json', 'r',encoding="utf8")]
-#tip_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_tip.json', 'r',encoding="utf8")]
-#user_data = [json.loads(line) for line in open('yelp_academic_dataset_user.json', 'r',encoding="utf8")]
-#review_data = [json.loads(line) for line in open('yelp_academic_dataset_review.json', 'r',encoding="utf8")] 
+if business:
+    business_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_business.json', 'r',encoding="utf8")]
+if checkin:
+    checkin_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_checkin.json', 'r',encoding="utf8")]
+if tip:
+    tip_data = [json.loads(line) for line in open('yelp_dataset/yelp_academic_dataset_tip.json', 'r',encoding="utf8")]
+if user:
+    user_data = [json.loads(line) for line in open('yelp_academic_dataset_user.json', 'r',encoding="utf8")]
+if review:
+    review_data = [json.loads(line) for line in open('yelp_academic_dataset_review.json', 'r',encoding="utf8")] 
 
-# Split into restaurants, bars and things
-restaurants = []
-bars = []
-other = []
-for raw_dict in business_data:
-	appended = False
-	if raw_dict['categories'] != None:
-		if 'restaurants' in raw_dict['categories'] or 'Restaurants' in raw_dict['categories']:
-			restaurants.append(raw_dict)
-			appended = True
-		if 'bars' in raw_dict['categories'] or 'Bars' in raw_dict['categories']:
-			bars.append(raw_dict)
-			appended = True
-		if not appended:
-			other.append(raw_dict)
-print('Total number of restaurants in dataset: ', len(restaurants))
-print('Total number of bars in dataset: ', len(bars))
-print('Total number of other businesses in dataset: ', len(other))
+if business:
+    # Split into restaurants, bars and things
+    restaurants = []
+    bars = []
+    other = []
+    for raw_dict in business_data:
+    	appended = False
+    	if raw_dict['categories'] != None:
+    		if 'restaurants' in raw_dict['categories'] or 'Restaurants' in raw_dict['categories']:
+    			restaurants.append(raw_dict)
+    			appended = True
+    		if 'bars' in raw_dict['categories'] or 'Bars' in raw_dict['categories']:
+    			bars.append(raw_dict)
+    			appended = True
+    		if not appended:
+    			other.append(raw_dict)
+    print('Total number of restaurants in dataset: ', len(restaurants))
+    print('Total number of bars in dataset: ', len(bars))
+    print('Total number of other businesses in dataset: ', len(other))
 
 # Data Mining Studies
 nR = 10000 #number of restaurants to data mine
-tsk1.function1(restaurants[0:nR],bars,other)
+nT = 10000 #number of tips to data mine
+#tsk1.function1(restaurants[0:nR],bars,other)
 #tsk1.function2(restaurants[0:nR],bars,other)
+tsk2.function1(tip_data[0:nT])
