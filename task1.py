@@ -54,20 +54,10 @@ def function1(restaurants,bars,other):
                 all_string_labels.append(str(int(item)))
             all_labels = all_string_labels
             
-        if lab == 'review_count': # TO DO
-            #bin the labels (test data) so we have fewer classes to deal with
-            y_train = np.round(y_train).ravel()
-            y_test = np.round(y_test).ravel()
+        if lab == 'review_count':
+            #Future Work: bin the labels (test data) so we have fewer classes to deal with
             all_string_labels = []
             for item in all_labels:
-#                if int(item) < 500:
-#                    string_item = '0+'
-#                elif int(item) < 1000:
-#                    string_item = '500+'
-#                elif int(item) < 1500:
-#                    string_item = '1000+'
-#                else:
-#                    string_item = '1500+'
                 all_string_labels.append(str(item))
             all_labels = all_string_labels
             
@@ -89,8 +79,6 @@ def function1(restaurants,bars,other):
         print('==================================')
         
         # Visualize a Decision Tree
-        print(len(all_category_names))
-        print(len(all_labels))
         func.plotDecisionTree(clf,all_category_names,all_labels,'classifier_'+lab)
 
 def function2(restaurants,bars,other):

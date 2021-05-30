@@ -16,6 +16,13 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
+def getSubset(list1,N):
+    list2 = []
+    idx_list = random.sample(range(0,len(list1)),N)
+    for idx in idx_list:
+        list2.append(list1[idx])
+    return list2
+
 # function to get unique values
 def unique(list1):
      
