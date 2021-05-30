@@ -30,7 +30,10 @@ def function1(restaurants,bars,other):
             #get categories
             cats = restaurant['categories']
             all_cats.append(cats)
-            all_labels.append(restaurant[lab])
+            if lab == 'review_count':
+                all_labels.append(str(np.round(np.array(restaurant[lab]),-3)))
+            else:
+                all_labels.append(restaurant[lab])
             restaurant_ind+=1
         
         vectorizer = CountVectorizer()
@@ -54,12 +57,12 @@ def function1(restaurants,bars,other):
                 all_string_labels.append(str(int(item)))
             all_labels = all_string_labels
             
-        if lab == 'review_count':
-            #Future Work: bin the labels (test data) so we have fewer classes to deal with
-            all_string_labels = []
-            for item in all_labels:
-                all_string_labels.append(str(item))
-            all_labels = all_string_labels
+#        if lab == 'review_count':
+#            #Future Work: bin the labels (test data) so we have fewer classes to deal with
+#            all_string_labels = []
+#            for item in all_labels:
+#                all_string_labels.append(str(item))
+#            all_labels = all_string_labels
             
         if lab == 'city':
             # convert labels to lower case and remove whitespaces
