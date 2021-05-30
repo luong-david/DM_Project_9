@@ -16,6 +16,15 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# function to get unique values
+def unique(list1):
+     
+    # insert the list to the set
+    list_set = set(list1)
+    # convert the set to the list
+    unique_list = (list(list_set))
+    return unique_list
+
 def SSE(mat,d1,centroid):
     diff = mat[d1,:].toarray()-centroid
     sumdiffsquared = np.power(diff,2).sum()
@@ -172,11 +181,19 @@ def DR_TSNE(mat):
 def plotDecisionTree(model,feature_list,class_list,filename):
     estimator = model.estimators_[5]
     
+    # get unique classes
+    unique_class_list = unique(class_list)
+    unique_class_list.sort()
+
+    # get unique features
+    unique_feature_list = unique(feature_list)
+    unique_feature_list.sort()
+    
     from sklearn.tree import export_graphviz
     # Export as dot file
     export_graphviz(estimator, out_file='./plots/classifiers/'+filename + '.dot', 
-                    feature_names = feature_list,
-                    class_names = class_list,
+                    feature_names = unique_feature_list,
+                    class_names = unique_class_list,
                     rounded = True, proportion = False, 
                     precision = 2, filled = True)
     

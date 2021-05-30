@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
+import math
 
 import functions as func
 
@@ -27,10 +28,10 @@ def function1(restaurants,bars,other):
         restaurant_ind = 0
         for restaurant in restaurants:
             #get categories
-        	cats = restaurant['categories']
-        	all_cats.append(cats)
-        	all_labels.append(restaurant[lab])
-        	restaurant_ind+=1
+            cats = restaurant['categories']
+            all_cats.append(cats)
+            all_labels.append(restaurant[lab])
+            restaurant_ind+=1
         
         vectorizer = CountVectorizer()
         
@@ -47,6 +48,35 @@ def function1(restaurants,bars,other):
             #5 star ratings. Also turn into 1d array as that's what classifier expects
             y_train = np.round(y_train).ravel()
             y_test = np.round(y_test).ravel()
+            # convert labels of floats to ints to strings
+            all_string_labels = []
+            for item in all_labels:
+                all_string_labels.append(str(int(item)))
+            all_labels = all_string_labels
+            
+        if lab == 'review_count': # TO DO
+            #bin the labels (test data) so we have fewer classes to deal with
+            y_train = np.round(y_train).ravel()
+            y_test = np.round(y_test).ravel()
+            all_string_labels = []
+            for item in all_labels:
+#                if int(item) < 500:
+#                    string_item = '0+'
+#                elif int(item) < 1000:
+#                    string_item = '500+'
+#                elif int(item) < 1500:
+#                    string_item = '1000+'
+#                else:
+#                    string_item = '1500+'
+                all_string_labels.append(str(item))
+            all_labels = all_string_labels
+            
+        if lab == 'city':
+            # convert labels to lower case and remove whitespaces
+            all_string_labels = []
+            for item in all_labels:
+                all_string_labels.append(item.lower().strip())
+            all_labels = all_string_labels
     
         clf = RandomForestClassifier(max_depth=20, random_state=0)
         clf.fit(X_train, y_train)
@@ -59,7 +89,9 @@ def function1(restaurants,bars,other):
         print('==================================')
         
         # Visualize a Decision Tree
-        func.plotDecisionTree(clf,all_category_names,str(all_labels),'classifier_'+lab)
+        print(len(all_category_names))
+        print(len(all_labels))
+        func.plotDecisionTree(clf,all_category_names,all_labels,'classifier_'+lab)
 
 def function2(restaurants,bars,other):
     print('Doing function2 in task1')

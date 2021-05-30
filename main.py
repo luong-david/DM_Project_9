@@ -79,8 +79,8 @@ if tip:
 # Data Mining Studies
 if business:
     nR = 10000 #number of restaurants to data mine
-    tsk1.function1(restaurants[0:nR],bars,other)
-    #tsk1.function2(restaurants[0:nR],bars,other)
+    #tsk1.function1(restaurants[0:nR],bars,other)
+    tsk1.function2(restaurants[0:nR],bars,other)
 if tip:
     nT = 10000 #number of tips to data mine
     DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
