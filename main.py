@@ -29,8 +29,11 @@ from sklearn.preprocessing import StandardScaler
 import functions as func
 import task1 as tsk1
 import task2 as tsk2
+import task1_cluster as tsk1_clust
 
 business = 1
+cluster = 1
+classify = 0
 checkin = 0
 tip = 0
 user = 0
@@ -78,9 +81,14 @@ if tip:
 
 # Data Mining Studies
 if business:
-    nR = 10000 #number of restaurants to data mine
-    tsk1.function1(func.getSubset(restaurants,nR),bars,other)
-    #tsk1.function2(func.getSubset(restaurants,nR),bars,other)
+    if classify:
+        nR = 10000 #number of restaurants to data mine
+        tsk1.function1(func.getSubset(restaurants,nR),bars,other)
+        #tsk1.function2(func.getSubset(restaurants,nR),bars,other)
+    elif cluster: 
+        #Pick a range of k values to try out within kmeans:
+        cluster_sizes = np.arange(10, 510, 50)
+        tsk1_clust.function0(restaurants[0:-1], cluster_sizes)
 if tip:
     nT = 10000 #number of tips to data mine
     DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
