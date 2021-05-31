@@ -77,6 +77,11 @@ def function1(restaurants,bars,other):
         # Visualize a Decision Tree
         func.plotDecisionTree(clf,all_category_names,all_labels,'classifier_'+lab)
 
+        # Additionally visualize the feature importances
+        func.plotFeatureImportance(clf.feature_importances_, all_category_names)
+
+
+
 def function2(restaurants,bars,other):
     print('Doing function2 in task1')
     

@@ -212,3 +212,12 @@ def plotClusters(cluster_result,groups):
         legend="full",
         alpha=0.3
     ) 
+    
+def plotFeatureImportance(feature_importances, category_names):
+        feature_imp = pd.Series(feature_importances, index = category_names).sort_values(ascending=False)
+        sns.barplot(x=feature_imp[0:25], y=feature_imp.index[0:25])
+        plt.xlabel('Feature Importance Score')
+        plt.ylabel('Features')
+        plt.title("Visualizing Important Features")
+        plt.legend()
+        plt.show()

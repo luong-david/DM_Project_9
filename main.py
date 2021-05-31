@@ -7,7 +7,7 @@ Created on Thu May 22 14:2:21 2021
 
 @author: Thomas Jacob, David Luong, Taylor Maurer
 """
-
+#%%
 import json
 import numpy as np
 import scipy as sp
@@ -87,10 +87,11 @@ if business:
         #tsk1.function2(func.getSubset(restaurants,nR),bars,other)
     elif cluster: 
         #Pick a range of k values to try out within kmeans:
-        cluster_sizes = np.arange(10, 510, 50)
+        cluster_sizes = np.arange(100, 101, 1)
         tsk1_clust.function0(restaurants[0:-1], cluster_sizes)
 if tip:
     nT = 10000 #number of tips to data mine
     DR = [1] # 0 = no DR, 1 = TNSE 2 = PCA
     for dr in DR:
        tsk2.function1(func.getSubset(tips,nT), dr)
+# %%
