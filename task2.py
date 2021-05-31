@@ -34,23 +34,37 @@ def function1(tip_data, DR):
         print('No DR performed')
         mat = mat3 
     elif DR == 1:
-        print('Using TNSNE for DR for 1000 data points due to memory issue')
+        print('Using TSNE for DR for 1000 data points due to memory issue')
         mat, tsne_result = func.DR_TSNE(mat3[0:1000])
+        result = tsne_result
     elif DR == 2:
         print('Using PCA for DR for 1000 data points due to memory issue')
         mat, pca_result = func.DR_PCA(mat3[0:1000])
+        result = pca_result
     else:
         print('Invalid DR method, proceed with no DR')
         mat = mat3   
     
     Ktarget = 10
     CLUSTERIND, INERTIAS = func.BSKM(mat,mat.shape[0],Ktarget)
-    
+
+    # assign cluster number to data vector
+    k = 0
+    cluster_solution = np.zeros(mat.shape[0],dtype=int)
+    for C in CLUSTERIND:
+        for item in C:
+            cluster_solution[item-1] = k
+        k += 1
+
     # Plot Total SSE vs K
     plt.figure()
     plt.plot(range(1,Ktarget+1),INERTIAS)
     plt.xlabel('Number of Clusters')
     plt.ylabel('Average SSE')
+    
+    # plot clusters
+    if DR == 1 or DR == 2:
+        func.plotClusters(result,cluster_solution)
     
     for i in range(Ktarget):
         print('===============================')

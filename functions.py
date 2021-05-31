@@ -168,21 +168,7 @@ def DR_PCA(mat):
 
 def DR_TSNE(mat):
     tsne = TSNE(n_components=2, perplexity=200, early_exaggeration=20, method='exact')
-    tsne_result = tsne.fit_transform(mat)
-    
-    result = pd.DataFrame()
-    result['tsne-2d-one'] = tsne_result[:,0]
-    result['tsne-2d-two'] = tsne_result[:,1]
-    
-    plt.figure(figsize=(16,10))
-    sns.scatterplot(
-        x="tsne-2d-one", y="tsne-2d-two",
-        hue=None,
-        palette=sns.color_palette("hls",10),
-        data=result,
-        legend="full",
-        alpha=0.3
-    )
+    tsne_result = tsne.fit_transform(mat)   
     return csr_matrix(tsne_result), tsne_result
 
 def plotDecisionTree(model,feature_list,class_list,filename):
@@ -211,3 +197,18 @@ def plotDecisionTree(model,feature_list,class_list,filename):
     #import pydot (requires pydot)
     #(graph,) = pydot.graph_from_dot_file('classifier.dot')
     #graph.write_png('tree.png')
+    
+def plotClusters(cluster_result,groups):
+    result = pd.DataFrame()
+    result['dr-2d-one'] = cluster_result[:,0]
+    result['dr-2d-two'] = cluster_result[:,1]
+    
+    plt.figure()
+    sns.scatterplot(
+        x="dr-2d-one", y="dr-2d-two",
+        hue=groups,
+        palette="deep",
+        data=result,
+        legend="full",
+        alpha=0.3
+    ) 

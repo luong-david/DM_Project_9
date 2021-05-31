@@ -57,13 +57,6 @@ def function1(restaurants,bars,other):
                 all_string_labels.append(str(int(item)))
             all_labels = all_string_labels
             
-#        if lab == 'review_count':
-#            #Future Work: bin the labels (test data) so we have fewer classes to deal with
-#            all_string_labels = []
-#            for item in all_labels:
-#                all_string_labels.append(str(item))
-#            all_labels = all_string_labels
-            
         if lab == 'city':
             # convert labels to lower case and remove whitespaces
             all_string_labels = []
